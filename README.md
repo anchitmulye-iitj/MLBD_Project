@@ -1,12 +1,12 @@
-# 🎵 Music Recommendation System using Deep Learning
+# Music Recommendation System
 
-This project builds a **content-based music recommender** using audio features extracted from the **Free Music Archive (FMA)** dataset. It uses **deep learning models (PANNs, VGGish)** to extract embeddings, scales them, and computes **cosine similarity** to recommend similar tracks.
+This project builds a **content-based music recommender** using audio features extracted from the **Free Music Archive (FMA)** dataset. It uses **deep learning models (PANNs)** to extract embeddings, scales them, and computes **cosine similarity** to recommend similar tracks.
 
 You can run the entire pipeline on local subsets, or scale it with **Dask** and **PySpark** for larger datasets like `fma_small`.
 
 ---
 
-## 🧠 Features
+## Features
 
 - Deep audio feature extraction (PANNs)
 - Scalable audio preprocessing with **Dask** / **PySpark**
@@ -17,9 +17,9 @@ You can run the entire pipeline on local subsets, or scale it with **Dask** and 
 
 ---
 
-## 🚀 Demo
+## Demo
 
-### 🔎 Streamlit UI
+### Streamlit UI
 
 <img src="assets/list.png" width="700"/>
 
@@ -27,15 +27,11 @@ You can run the entire pipeline on local subsets, or scale it with **Dask** and 
 
 ---
 
-## 🗂 Dataset
+## Dataset
 
-- 📁 [Free Music Archive (FMA)](https://github.com/mdeff/fma)
-- We use the `fma_small` subset (~8000 audio files, each 30s, ~3.5 GB)
+- [Free Music Archive (FMA)](https://os.unil.cloud.switch.ch/fma/fma_small.zip)
+- We use the `fma_small` subset (~8000 audio files, each 30s, ~7.68 GB)
 - Metadata from `tracks.csv`
 
 ---
 
-## 📦 Requirements
-
-```bash
-pip install -r requirements.txt
