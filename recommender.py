@@ -32,7 +32,7 @@ track_info.to_csv("track_info.csv")
 print(track_info.info())
 
 # Enable for testing
-# track_info = track_info.head(100)
+track_info = track_info.head(100)
 
 # Initialize models
 model = vggish()
@@ -115,6 +115,33 @@ def recommend(track_id, top_n=5):
         print(f"{i}. {title} ({genre}) - Similarity: {score:.4f}")
 
 
+def compute_precision_at_k(track_id, top_k=10):
+    if track_id not in features_df.index:
+        print("Track not found.")
+        return None
+
+    # Get genre of the input track
+    true_genre = track_info.loc[track_id, 'genre_top']
+
+    # Get the similarity scores
+    idx = features_df.index.get_loc(track_id)
+    sim_scores = list(enumerate(similarity[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Remove the track itself
+    sim_scores = [x for x in sim_scores if features_df.index[x[0]] != track_id]
+
+    # Get top K recommended track IDs
+    top_indices = [features_df.index[i] for i, _ in sim_scores[:top_k]]
+
+    # Count how many have the same genre
+    relevant_count = sum(track_info.loc[tid, 'genre_top'] == true_genre for tid in top_indices)
+
+    precision = relevant_count / top_k
+    print(f"Precision@{top_k} for Track ID {track_id}: {precision:.2f}")
+    return precision
+
+
 def recall_at_k(k=5, sample_size=100):
     recalls = []
     sample_tracks = features_df.index[:sample_size]
@@ -159,4 +186,7 @@ if __name__ == "__main__":
     recommend(sample_track, top_n=15)
 
     print("\nRecall:")
-    recall_at_k(k=10, sample_size=50)
+    recall_at_k(k=10, sample_size=100)
+
+    print("\nPrecision:")
+    compute_precision_at_k(sample_track, top_k=10)
